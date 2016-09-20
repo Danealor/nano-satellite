@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cctype>
 #include <string>
 #include "analyzer.h"
 
@@ -21,7 +22,7 @@ vector<Word> analyze(istream& stream)
 	while (stream >> str)
 	{
 		removeCharsFromString(str, ",.:;'`~?!@#$%^&*()[]{}-_+=<>/|\\\""); // Remove punctuation
-		transform(str.begin(), str.end(), str.begin(), tolower); // Remove capitalization
+		transform(str.begin(), str.end(), str.begin(), [](char c) { return tolower(c); }); // Remove capitalization
 		int index = findIndex(words, str);
 		if (index < words.size() && words[index].str == str)
 			words[index].count++;
@@ -49,7 +50,7 @@ int findIndex(const vector<Word>& words, const string& str, int begin, int end)
 		return findIndex(words, str, begin, mid - 1);
 }
 
-void removeCharsFromString(string &str, char* const charsToRemove) 
+void removeCharsFromString(string& str, const string& charsToRemove) 
 {
-	str.erase(remove_if(str.begin(), str.end(), [&](const char& c) { return strchr(charsToRemove, c); }), str.end());
+	str.erase(remove_if(str.begin(), str.end(), [&](const char& c) { return charsToRemove.find(c) != string::npos; }), str.end());
 }

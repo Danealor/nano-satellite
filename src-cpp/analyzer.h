@@ -16,6 +16,6 @@ std::ostream& operator<<(std::ostream&, const Word&);
 	
 std::vector<Word> analyze(std::istream&);
 int findIndex(const std::vector<Word>&, const std::string&, int = 0, int = -2);
-void removeCharsFromString(std::string &str, char*);
+void removeCharsFromString(std::string& str, const std::string&);
 
 #endif
